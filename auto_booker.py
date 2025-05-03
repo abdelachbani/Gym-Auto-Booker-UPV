@@ -93,4 +93,5 @@ schedule.every().saturday.at("10:01", "Europe/Madrid").do(main)
 print("Script started. Waiting for the scheduled task...")
 while True:
     schedule.run_pending()
-    time.sleep(10)
+    print("Waiting for the scheduled task...")
+    time.sleep(30)
