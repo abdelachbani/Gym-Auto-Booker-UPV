@@ -28,9 +28,11 @@ def setup_driver():
 
 def login(driver):
     driver.get(URL_LOGIN)
-    user = driver.find_element(By.NAME, 'username')
+    # Explicit wait for login elements
+    wait = WebDriverWait(driver, 5)
+    user = wait.until(ec.presence_of_element_located((By.ID, 'username')))
     user.send_keys(USER)
-    password = driver.find_element(By.NAME, 'password')
+    password = driver.find_element(By.ID, 'password')
     password.send_keys(PASSWORD)
     password.submit()
     time.sleep(2)
