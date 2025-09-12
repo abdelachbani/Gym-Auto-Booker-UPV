@@ -1,5 +1,5 @@
-# Gym Auto Booker
-A tool to automatically reserve Gym sessions on the Politechnical University Of Valencia Gym.
+# Gym Auto Booker UPV
+A tool to automatically reserve Gym sessions on the Politechnic University Of Valencia Gym.
 
 ## Scripts
 ### auto_booker.py
