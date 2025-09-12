@@ -18,7 +18,7 @@ base_session_number = 1
 
 # URLs
 URL_LOGIN = 'https://cas.upv.es/cas/login?service=https%3A%2F%2Fwww.upv.es%2Fpls%2Fsoalu%2Fsic_intracas.app_intranet%3FP_CUA%3Dmiupv'
-BOOKING_URL = 'https://intranet.upv.es/pls/soalu/sic_depact.HSemActividades?p_campus=V&p_tipoact=6799&p_codacti=21549&p_vista=intranet&p_idioma=c'
+BOOKING_URL = 'https://intranet.upv.es/pls/soalu/sic_depact.HSemActividades?p_campus=V&p_tipoact=6846&p_codacti=21809&p_vista=intranet&p_idioma=c'
 
 def setup_driver():
     chrome_options = Options()
