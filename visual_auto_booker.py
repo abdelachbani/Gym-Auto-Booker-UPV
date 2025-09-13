@@ -82,7 +82,7 @@ def main():
                 print("Reserved successfully!")
             else:
                 print(f"Error in the booking process of the session: MUS{num_session}")
-            time.sleep(1)
+            time.sleep(3)
 
     finally:
         driver.quit()

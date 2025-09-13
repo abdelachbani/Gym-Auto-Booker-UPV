@@ -86,7 +86,7 @@ def main():
             else:
                 print(f"Error in the booking process of the session: MUS{num_session}")
                 print("The session is probably still taken. Trying again in 30 seconds...")
-            time.sleep(1)
+            time.sleep(3)
 
     finally:
         driver.quit()
