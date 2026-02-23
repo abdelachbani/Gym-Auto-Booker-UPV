@@ -1,17 +1,19 @@
 ﻿import html
+import os
 import re
 import time
 from html.parser import HTMLParser
 from urllib.parse import urljoin
 
-import requests
+from requests.sessions import Session
 
 # User credentials
 USER = ""
 PASSWORD = ""
 
 # Desired sessions
-SESSIONS = [2]
+SESSIONS_ENV = os.environ.get('SESSIONS', '2')
+SESSIONS = [int(session.strip()) for session in SESSIONS_ENV.split(',')]
 base_session_number = 1
 
 # URLs
@@ -44,8 +46,24 @@ class LoginFormParser(HTMLParser):
             self.in_form = False
             self.done = True
 
+def decode_location(location, encoding="utf-8"):
+    if isinstance(location, bytes):
+        return location.decode(encoding)
+    return location
+
+class UPVSession(Session):
+    def get_redirect_target(self, resp):
+        location = resp.headers.get("location")
+        if not location:
+            return None
+
+        try:
+            return decode_location(location, "utf-8")
+        except UnicodeDecodeError:
+            return decode_location(location, "latin-1")
+
 def create_session():
-    session = requests.Session()
+    session = UPVSession()
     session.headers.update({
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                       "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -103,14 +121,15 @@ def get_base_code(session):
 def reserve_hour(session, session_code, session_number):
     url = (
         'https://intranet.upv.es/pls/soalu/sic_depact.HSemActMatri?'
-        f'p_campus=V&p_codacti=21549&p_codgrupo_mat={session_code}'
-        '&p_vista=intranet&p_tipoact=6799&p_idioma=c'
+        f'p_campus=V&p_codacti=21809&p_codgrupo_mat={session_code}'
+        '&p_vista=intranet&p_tipoact=6846&p_idioma=c'
     )
+
     response = session.get(url, timeout=10)
     response.raise_for_status()
     text = response.text
 
-    pattern = rf"MUSCULACI.{0,8}0{session_number}"
+    pattern = r"inscrito en el grupo de actividad"
     return re.search(pattern, text, re.IGNORECASE) is not None
 
 def main():
