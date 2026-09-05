@@ -1,6 +1,6 @@
-# GymAutoBooker — UPV Gym Session Auto-Reservation
+# GymAutoBooker, UPV Gym Session Auto-Reservation
 
-Automatically reserve gym sessions at the **Polytechnic University of Valencia (UPV)** intranet. Includes multiple approaches — lightweight HTTP requests and Selenium-based browser automation — to cover different use cases: scheduled weekly booking, visual debugging, and sniping taken sessions.
+Automatically reserve gym sessions at the **Polytechnic University of Valencia (UPV)** intranet. Includes multiple approaches, lightweight HTTP requests and Selenium-based browser automation, to cover different use cases: scheduled weekly booking, visual debugging, and sniping taken sessions.
 
 ---
 
@@ -12,10 +12,10 @@ Automatically reserve gym sessions at the **Polytechnic University of Valencia (
 - [Installation](#-installation)
 - [Configuration](#-configuration)
 - [Scripts](#-scripts)
-  - [Requests — taken\_sessions\_booker.py](#requests--taken_sessions_bookerpy)
-  - [Selenium — auto\_booker.py](#selenium--auto_bookerpy)
-  - [Selenium — visual\_auto\_booker.py](#selenium--visual_auto_bookerpy)
-  - [Selenium — taken\_sessions\_booker.py](#selenium--taken_sessions_bookerpy)
+  - [Requests, taken\_sessions\_booker.py](#requests--taken_sessions_bookerpy)
+  - [Selenium, auto\_booker.py](#selenium--auto_bookerpy)
+  - [Selenium, visual\_auto\_booker.py](#selenium--visual_auto_bookerpy)
+  - [Selenium, taken\_sessions\_booker.py](#selenium--taken_sessions_bookerpy)
 - [How It Works](#-how-it-works)
 - [Disclaimer](#-disclaimer)
 
@@ -23,10 +23,10 @@ Automatically reserve gym sessions at the **Polytechnic University of Valencia (
 
 ## Features
 
-- **Scheduled booking** — Automatically reserves sessions every Saturday when the new week opens.
-- **Taken-session sniping** — Continuously retries booking fully-booked sessions until a spot opens up.
-- **Two implementations** — A fast, lightweight `requests`-based version and a `selenium`-based version.
-- **Headless & visual modes** — Run headless on a server or with a visible browser for debugging.
+- **Scheduled booking**, Automatically reserves sessions every Saturday when the new week opens.
+- **Taken-session sniping**, Continuously retries booking fully-booked sessions until a spot opens up.
+- **Two implementations**, A fast, lightweight `requests`-based version and a `selenium`-based version.
+- **Headless & visual modes**, Run headless on a server or with a visible browser for debugging.
 
 ---
 
@@ -55,12 +55,7 @@ GymAutoBooker/
 
 ## Installation
 
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/<your-username>/GymAutoBooker.git
-   cd GymAutoBooker
-   ```
+1. **Clone the repository**
 
 2. **Install dependencies:**
 
@@ -86,7 +81,7 @@ Each script contains the following variables at the top that you need to fill in
 | `PASSWORD` | Your UPV CAS password.                                                                  |
 | `SESSIONS` | List of session numbers to book (e.g., `[2, 9, 10]` for MUS002, MUS009, MUS010).       |
 
-### Requests version — environment variable support
+### Requests version, environment variable support
 
 The `Requests/taken_sessions_booker.py` script also reads sessions from the `SESSIONS` environment variable (comma-separated):
 
@@ -102,7 +97,7 @@ If the environment variable is not set, it defaults to session `2`.
 
 ## Scripts
 
-### Requests — `taken_sessions_booker.py`
+### Requests, `taken_sessions_booker.py`
 
 > **Location:** `Requests/taken_sessions_booker.py`
 
@@ -117,7 +112,7 @@ python Requests/taken_sessions_booker.py
 
 ---
 
-### Selenium — `auto_booker.py`
+### Selenium, `auto_booker.py`
 
 > **Location:** `Selenium/auto_booker.py`
 
@@ -132,7 +127,7 @@ python Selenium/auto_booker.py
 
 ---
 
-### Selenium — `visual_auto_booker.py`
+### Selenium, `visual_auto_booker.py`
 
 > **Location:** `Selenium/visual_auto_booker.py`
 
@@ -147,7 +142,7 @@ python Selenium/visual_auto_booker.py
 
 ---
 
-### Selenium — `taken_sessions_booker.py`
+### Selenium, `taken_sessions_booker.py`
 
 > **Location:** `Selenium/taken_sessions_booker.py`
 
@@ -164,16 +159,16 @@ python Selenium/taken_sessions_booker.py
 
 ## How It Works
 
-1. **Authentication** — The script logs in to the UPV CAS portal using your credentials and follows the redirect chain into the intranet.
+1. **Authentication**, The script logs in to the UPV CAS portal using your credentials and follows the redirect chain into the intranet.
 
-2. **Base code discovery** — On the gym booking page, the first available session link contains a `p_codgrupo_mat` parameter. This hexadecimal code serves as the **base code**. The session number (e.g., MUS001, MUS002, …) is extracted from the link text.
+2. **Base code discovery**, On the gym booking page, the first available session link contains a `p_codgrupo_mat` parameter. This hexadecimal code serves as the **base code**. The session number (e.g., MUS001, MUS002, …) is extracted from the link text.
 
-3. **Code calculation** — Each session's booking code is derived by simple hex arithmetic:
+3. **Code calculation**, Each session's booking code is derived by simple hex arithmetic:
    ```
    session_code = base_code + (desired_session - base_session_number)
    ```
 
-4. **Reservation** — The script navigates to (or sends a GET request to) the booking URL with the calculated code. Success is confirmed by checking for a confirmation message in the response.
+4. **Reservation**, The script navigates to (or sends a GET request to) the booking URL with the calculated code. Success is confirmed by checking for a confirmation message in the response.
 
 ---
 
