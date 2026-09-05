@@ -18,7 +18,7 @@ base_session_number = 1
 
 # URLs
 URL_LOGIN = 'https://cas.upv.es/cas/login?service=https%3A%2F%2Fwww.upv.es%2Fpls%2Fsoalu%2Fsic_intracas.app_intranet%3FP_CUA%3Dmiupv'
-BOOKING_URL = 'https://intranet.upv.es/pls/soalu/sic_depact.HSemActividades?p_campus=V&p_tipoact=6846&p_codacti=21809&p_vista=intranet&p_idioma=c'
+BOOKING_URL = 'https://intranet.upv.es/pls/soalu/sic_depact.HSemActividades?p_campus=V&p_tipoact=6846&p_codacti=21948&p_vista=intranet&p_idioma=c'
 
 class LoginFormParser(HTMLParser):
     def __init__(self):
@@ -121,7 +121,7 @@ def get_base_code(session):
 def reserve_hour(session, session_code, session_number):
     url = (
         'https://intranet.upv.es/pls/soalu/sic_depact.HSemActMatri?'
-        f'p_campus=V&p_codacti=21809&p_codgrupo_mat={session_code}'
+        f'p_campus=V&p_codacti=21948&p_codgrupo_mat={session_code}'
         '&p_vista=intranet&p_tipoact=6846&p_idioma=c'
     )
 
